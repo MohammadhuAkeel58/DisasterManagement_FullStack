@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import EditDisasterModal from './EditDisasterModal';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import EditDisasterModal from "./EditDisasterModal";
 
 function Manage() {
   const [disasters, setDisasters] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedDisaster, setSelectedDisaster] = useState({});
-  const { id } = useParams();
-  const url = 'http://localhost:8080/disaster/getAll';
+  const url = "http://localhost:8080/disaster/getAll";
 
   useEffect(() => {
     axios
@@ -17,16 +15,18 @@ function Manage() {
         setDisasters(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       });
   }, [url]);
 
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:8080/disaster/deleteDisaster/${id}`);
-      setDisasters((prevDisasters) => prevDisasters.filter((disaster) => disaster.id !== id));
+      setDisasters((prevDisasters) =>
+        prevDisasters.filter((disaster) => disaster.id !== id)
+      );
     } catch (error) {
-      console.error('Error deleting Disaster:', error);
+      console.error("Error deleting Disaster:", error);
     }
   };
 
